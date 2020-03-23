@@ -1896,6 +1896,72 @@ namespace CrackingTheInterview
 
         //Bonus
         #region BonusQuestions
+        #region
+        public int[][] SprialMatrix(int n)
+        {
+            int[][] matrix = new int[n][];
+
+            for (int i = 0; i < n; i++)
+            {
+                matrix[i] = new int[n];
+            }
+
+            int offset = 0;
+            int counter = 1;
+            int counterLimit = n * n + 1;
+
+            while (counter <= counterLimit || offset > n)
+            {
+
+                //top
+                for (int i = 0 + offset; i < n - offset; i++)
+                {
+                    matrix[offset][i] = counter;
+                    counter++;
+                    if (counter == counterLimit)
+                    {
+                        return matrix;
+                    }
+                }
+                //right
+                for (int i = 1 + offset; i < n - offset; i++)
+                {
+                    matrix[i][n - 1 - offset] = counter;
+                    counter++;
+                    if (counter == counterLimit)
+                    {
+                        return matrix;
+                    }
+                }
+                //bot
+                for (int i = n - 2 - offset; i >= offset; i--)
+                {
+                    matrix[n - 1 - offset][i] = counter;
+                    counter++;
+                    if (counter == counterLimit)
+                    {
+                        return matrix;
+                    }
+                }
+                //left
+                for (int i = n - 2 - offset; i >= offset + 1; i--)
+                {
+                    matrix[i][offset] = counter;
+                    counter++;
+                    if (counter == counterLimit)
+                    {
+                        return matrix;
+                    }
+                }
+
+                offset++;
+            }
+            return matrix;
+        }
+    
+        #endregion
+
+
         #region TeamScores - StringManip
         public string[] TeamScores(string[] matchScores)
         {
@@ -2183,6 +2249,26 @@ namespace CrackingTheInterview
 
             Console.WriteLine(" ");
         }
+
+        public void TestSpiralMatrix(int n)
+        {
+            int[][] matrix = CIQ.SprialMatrix(n);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(matrix[i][j] + " ");
+                }
+                Console.WriteLine("");
+            }
+            Console.WriteLine("Finished Spiral Matrix");
+
+
+            Console.WriteLine("matrix.Length: " + matrix.Length);
+            Console.WriteLine("matrix[0].Length: " + matrix[0].Length);
+            Console.WriteLine("matrix[1].Length: " + matrix[1].Length);
+      
+        }
         #endregion
     }
 
@@ -2228,6 +2314,7 @@ namespace CrackingTheInterview
 
             #region bonus
             TC.TestTeamScores();
+            TC.TestSpiralMatrix(4);
             #endregion
         }
     }
